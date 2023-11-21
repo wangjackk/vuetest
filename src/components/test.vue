@@ -7,13 +7,19 @@
     <el-table-column prop="usage" label="Usage" width="100"></el-table-column>
     <el-table-column prop="work" label="Work" width="180"></el-table-column>
 
+    <!-- 新增的按钮列 -->
+    <el-table-column label="操作" width="150">
+      <template #default="{ row }">
+        <el-button size="small" @click="handleButtonClick(row)">操作</el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
-<!---->
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
-import { ElTable, ElTableColumn } from 'element-plus';
+import { ElTable, ElTableColumn, ElButton } from 'element-plus';
 
 const tableData = ref([]);
 
@@ -31,14 +37,21 @@ let intervalId;
 
 onMounted(() => {
   fetchData(); // 首次加载时获取数据
-  intervalId = setInterval(fetchData, 1000); // 每5秒刷新一次数据
+  intervalId = setInterval(fetchData, 1000); // 每秒刷新一次数据
 });
 
 onUnmounted(() => {
   clearInterval(intervalId); // 组件卸载时清除定时器
 });
+
+const handleButtonClick = (row) => {
+  //弹窗
+  alert(JSON.stringify(row, null, 2));
+  console.log('Button clicked for row:', row);
+  // 处理按钮点击事件
+};
 </script>
 
 <style>
-/* 在这里添加您的样式 */
+/* 添加样式 */
 </style>
